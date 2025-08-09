@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Trip Wishlist (Lite)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0f172a;--card:#0b1220;--ink:#e5e7eb;--muted:#94a3b8;--accent:#22c55e;--line:#1f2937}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--ink)}
+    header{padding:24px 16px;text-align:center} header h1{margin:0 0 8px;font-size:28px} header p{margin:0;color:var(--muted)}
+    .container{max-width:1024px;margin:0 auto;padding:16px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px}
+    label{display:block;margin:10px 0 6px} input,select,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:#0a0f1c;color:var(--ink)}
+    .row{display:grid;grid-template-columns:1fr;gap:12px} @media(min-width:900px){.row{grid-template-columns:1fr 1fr}}
+    .btn{padding:10px 14px;border:none;border-radius:10px;font-weight:700;cursor:pointer} .primary{background:var(--accent);color:#06210e}
+    .secondary{background:#0a0f1c;color:var(--ink);border:1px solid var(--line)}
+    .pill{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:#0a0f1c;color:#cde8d6;font-size:12px;margin:4px 6px 0 0}
+    .muted{color:var(--muted)} .small{font-size:12px}
+    .list{display:flex;flex-wrap:wrap;gap:8px}
+    .kbd{background:#0a0f1c;border:1px solid var(--line);padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Trip Wishlist (Lite)</h1>
+    <p>Define flexible travel criteria and get periodic updates via GitHub Issues. Free. No backend.</p>
+  </header>
+  <div class="container">
+    <div class="card">
+      <h3>Create a Trip</h3>
+      <div class="row">
+        <div>
+          <label>Trip name</label>
+          <input id="name" placeholder="e.g., Europe in Fall"/>
+        </div>
+        <div>
+          <label>Home airports (IATA, comma-separated)</label>
+          <input id="homeAirports" placeholder="e.g., SLC, DEN"/>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Destinations (cities/regions/countries, comma-separated)</label>
+          <input id="destinations" placeholder="e.g., Paris, Rome, Spain, Balkans"/>
+        </div>
+        <div>
+          <label>Seasons / Months</label>
+          <input id="months" placeholder="e.g., Sep, Oct, Nov or Summer"/>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Weekends / Weekdays</label>
+          <select id="pattern">
+            <option value="any">Any</option>
+            <option value="weekends">Weekends</option>
+            <option value="weekdays">Weekdays</option>
+          </select>
+        </div>
+        <div>
+          <label>Nights (min–max)</label>
+          <input id="nights" placeholder="e.g., 3-7"/>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Max flight price (USD, optional)</label>
+          <input id="maxPrice" placeholder="e.g., 500"/>
+        </div>
+        <div>
+          <label>Update cadence</label>
+          <select id="cadence">
+            <option value="DAILY">Daily</option>
+            <option value="WEEKLY" selected>Weekly</option>
+            <option value="MONTHLY">Monthly</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label>Notes (optional)</label>
+        <textarea id="notes" placeholder="Extra constraints (e.g., avoid red-eye, prefer nonstop)"></textarea>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="generate">Generate trip JSON</button>
+        <button class="btn secondary" id="loadSample">Load sample</button>
+        <button class="btn secondary" id="clear">Clear</button>
+      </div>
+      <div class="small muted" style="margin-top:10px">
+        After generating, copy the JSON and save it into your repo under <code class="kbd">/trips/your-trip.json</code>. <br/>
+        The GitHub Action will read all files in <code class="kbd">/trips</code> and post updates to Issues you can subscribe to.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Trip JSON</h3>
+      <textarea id="output" style="min-height:220px" placeholder="Your generated trip JSON will appear here…"></textarea>
+      <div class="row">
+        <button class="btn secondary" id="copy">Copy JSON</button>
+        <button class="btn secondary" id="preview">Preview deep links</button>
+      </div>
+      <div id="links" class="list" style="margin-top:10px"></div>
+      <div class="small muted">If you later add a <span class="pill">TEQUILA_API_KEY</span> secret, the updates will include live prices & apply your max price threshold.</div>
+    </div>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>

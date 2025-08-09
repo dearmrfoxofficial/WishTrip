@@ -1,0 +1,22 @@
+{
+  "name": "Europe Fall Sampler",
+  "homeAirports": [
+    "SLC",
+    "DEN"
+  ],
+  "destinations": [
+    "Paris",
+    "Rome",
+    "Barcelona"
+  ],
+  "months": [
+    9,
+    10,
+    11
+  ],
+  "pattern": "weekends",
+  "nights": "5-9",
+  "maxPrice": 700,
+  "cadence": "WEEKLY",
+  "notes": "Prefer nonstop; avoid redeye."
+}
